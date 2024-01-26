@@ -25,7 +25,7 @@ customer_orders as (
         max(order_date) as most_recent_order,
         count(order_id) as number_of_orders
     from orders
-
+    where status = 'placed'
     group by customer_id
 
 ),
@@ -53,6 +53,7 @@ final as (
         customers.last_name,
         customer_orders.first_order,
         customer_orders.most_recent_order,
+        customer_payments.total_amount / customer_orders.number_of_orders as average_value_per_order,
         customer_orders.number_of_orders,
         customer_payments.total_amount as customer_lifetime_value
 
